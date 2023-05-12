@@ -1,0 +1,51 @@
+#!/bin/bash
+./bin/magento deploy:mode:set production
+
+# ./bin/magento config:set sales_email/general/async_sending 1
+# ./bin/magento config:set dev/template/allow_symlink 1
+./bin/magento config:set web/url/redirect_to_base 301
+./bin/magento config:set catalog/frontend/flat_catalog_category 1
+./bin/magento config:set catalog/frontend/flat_catalog_product 1
+./bin/magento config:set dev/css/merge_css_files 1
+./bin/magento config:set dev/css/minify_files 1
+./bin/magento config:set dev/js/merge_files 1
+./bin/magento config:set dev/js/minify_files 1
+./bin/magento config:set dev/template/minify_html 1
+./bin/magento config:set dev/js/enable_js_bundling 1
+./bin/magento config:set dev/grid/async_indexing 1
+
+# NOTE
+# clear the Magento cache
+./bin/magento cache:clean
+# remove pub/static/*
+rm -rf pub/static/*
+# deploy static content
+./bin/magento setup:static-content:deploy
+
+./bin/magento config:set admin/security/password_lifetime ""
+./bin/magento config:set admin/security/password_is_forced 0
+
+./bin/magento config:set shipping/origin/city "San Francisco"
+./bin/magento config:set shipping/origin/street_line1 "123 Main Street"
+./bin/magento config:set shipping/origin/street_line2 "Suite 456"
+./bin/magento config:set general/store_information/name "Magento Online Store"
+./bin/magento config:set general/store_information/phone "+1-123-456-7890"
+./bin/magento config:set general/store_information/hours "Mon-Fri: 9am-6pm, 
+Sat-Sun: Closed"
+./bin/magento config:set general/store_information/country_id "US"
+./bin/magento config:set general/store_information/region_id "12"
+./bin/magento config:set general/store_information/postcode "12345"
+./bin/magento config:set general/store_information/city "San Francisco"
+./bin/magento config:set general/store_information/street_line1 "123 Main 
+Street"
+./bin/magento config:set general/store_information/street_line2 "Suite 456"
+./bin/magento config:set admin/security/admin_account_sharing 1
+./bin/magento config:set admin/security/session_lifetime 3600
+
+# ./bin/magento config:set sales/magento_rma/enabled 1
+
+# ./bin/magento config:set btob/website_configuration/company_active 1
+# ./bin/magento config:set btob/website_configuration/sharedcatalog_active 1
+# ./bin/magento config:set btob/website_configuration/quickorder_active 1
+# ./bin/magento config:set btob/website_configuration/requisition_list_active 1
+# ./bin/magento config:set btob/website_configuration/negotiablequote_active 1
